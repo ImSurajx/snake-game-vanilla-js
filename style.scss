@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -6,9 +6,48 @@
     font-weight: 300;
 }
 
-html, body{
+html,
+body {
     height: 100%;
     width: 100%;
     background: #333;
-    color: #fff;
+    color: #000;
+}
+
+:root {
+    --primary-background-color: #222;
+    --primary-board-color: whitesmoke;
+
+    // for padding, margin, other size
+    --unit-xxsm: 0.5px;
+    --unit-xsm: 4px;
+    --unit-sm: 8px;
+    --unit-m: 16px;
+    --unit-l: 32px;
+    --unit-xl: 48px;
+    --unit-xxl: 96px;
+}
+
+#container {
+    height: 100%;
+    width: 100%;
+    background: var(--primary-background-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    #gameboard {
+        height: 95%;
+        width: 95%;
+        background: var(--primary-board-color);
+        border-radius: var(--unit-xsm);
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(var(--unit-xl), 1fr));
+        grid-template-rows: repeat(auto-fill, minmax(var(--unit-xl), 1fr));
+
+        .block {
+            border: var(--unit-xxsm) solid black;
+            font-size: 0.8rem;
+        }
+    }
 }
