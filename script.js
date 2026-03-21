@@ -15,7 +15,18 @@ let rows = Math.floor(gameBoard.clientHeight / blockHeight); // vertical blocks
 // empty 2d array which will store each block (grid)
 let grid = [];
 
+
+// aditional varibales
 let isGameOver = false;
+
+// only these keys are allowed for movement
+const allowedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp']
+
+// current direction of snake
+let direction = "ArrowRight";
+
+// next direction which user presses (used to avoid instant reverse bugs)
+let nextDirection = "ArrowRight";
 
 
 // render board (create grid)
@@ -56,56 +67,90 @@ let snake = [
 ];
 
 
-// direction of snake movement
-let direction = "right";
+// handling key press for direction change
+document.addEventListener("keydown", (e) => {
+
+    // ignore if key is not arrow key
+    if (!allowedKeys.includes(e.key)) return;
+
+    // prevent reverse movement (snake cannot go directly opposite)
+    if (e.key === "ArrowLeft" && direction === "ArrowRight") return;
+    if (e.key === "ArrowRight" && direction === "ArrowLeft") return;
+    if (e.key === "ArrowUp" && direction === "ArrowDown") return;
+    if (e.key === "ArrowDown" && direction === "ArrowUp") return;
+
+    // store next direction (will apply in game loop)
+    nextDirection = e.key;
+});
 
 
 // move snake
 function moveSnake(direction) {
 
-    // only handling right direction for now
-    if (direction == "right") {
+    // new head will be calculated based on direction
+    let newHead;
 
-        // creating new head (move 1 step right → y + 1)
-        let newHead = {
+    // moving right → increase y
+    if (direction == "ArrowRight") {
+        newHead = {
             x: snake[0].x,
             y: snake[0].y + 1
         };
 
-        // checking boundary → if snake goes outside grid
-        if (
-            newHead.x < 0 ||
-            newHead.y < 0 ||
-            newHead.x >= rows ||
-            newHead.y >= cols
-        ) {
-            console.log("Game Over");
+        // moving left → decrease y
+    } else if (direction == "ArrowLeft") {
+        newHead = {
+            x: snake[0].x,
+            y: snake[0].y - 1
+        };
 
-            isGameOver = true;
+        // moving up → decrease x
+    } else if (direction == "ArrowUp") {
+        newHead = {
+            x: snake[0].x - 1,
+            y: snake[0].y
+        };
 
-            // stopping game loop
-            clearInterval(GameLoop);
-
-            return;
-        }
-
-        // getting tail (last element)
-        let tail = snake[snake.length - 1];
-
-        // adding new head at start
-        snake.unshift(newHead);
-
-        // removing tail from ui
-        grid[tail.x][tail.y].classList.remove('snake');
-
-        // removing last element from array
-        snake.pop();
+        // moving down → increase x
+    } else if (direction == "ArrowDown") {
+        newHead = {
+            x: snake[0].x + 1,
+            y: snake[0].y
+        };
     }
+
+    // safety check → if for some reason newHead is not created
+    if (!newHead) return;
+
+    // checking boundary → if snake goes outside grid
+    if (
+        newHead.x < 0 ||
+        newHead.y < 0 ||
+        newHead.x >= rows ||
+        newHead.y >= cols
+    ) {
+        console.log("Game Over");
+
+        isGameOver = true;
+
+        // stopping game loop
+        clearInterval(GameLoop);
+
+        return;
+    }
+
+    // getting tail (last element)
+    let tail = snake[snake.length - 1];
+
+    // adding new head at start
+    snake.unshift(newHead);
+
+    // removing tail from ui
+    grid[tail.x][tail.y].classList.remove('snake');
+
+    // removing last element from array
+    snake.pop();
 }
-
-
-// initial move
-moveSnake(direction);
 
 
 // render snake
@@ -125,7 +170,13 @@ renderSnake();
 // game loop → runs every 400ms
 let GameLoop = setInterval(() => {
 
-    moveSnake(direction);   // update position
-    renderSnake();          // update ui
+    // update direction once per frame (smooth control)
+    direction = nextDirection;
+
+    // move snake
+    moveSnake(direction);
+
+    // update ui
+    renderSnake();
 
 }, 400);
