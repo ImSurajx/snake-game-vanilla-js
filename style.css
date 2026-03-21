@@ -17,6 +17,7 @@ body {
 :root {
   --primary-background-color: #222;
   --primary-board-color: whitesmoke;
+  --primary-snake-color: rgb(83, 233, 83);
   --unit-xxsm: 0.5px;
   --unit-xsm: 4px;
   --unit-sm: 8px;
@@ -46,4 +47,7 @@ body {
 #container #gameboard .block {
   border: var(--unit-xxsm) solid black;
   font-size: 0.8rem;
+}
+#container #gameboard .snake {
+  background: var(--primary-snake-color);
 }/*# sourceMappingURL=style.css.map */

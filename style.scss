@@ -17,6 +17,7 @@ body {
 :root {
     --primary-background-color: #222;
     --primary-board-color: whitesmoke;
+    --primary-snake-color: rgb(83, 233, 83);
 
     // for padding, margin, other size
     --unit-xxsm: 0.5px;
@@ -48,6 +49,10 @@ body {
         .block {
             border: var(--unit-xxsm) solid black;
             font-size: 0.8rem;
+        }
+
+        .snake{
+            background:var(--primary-snake-color);
         }
     }
 }
