@@ -18,6 +18,7 @@ body {
   --primary-background-color: #222;
   --primary-board-color: whitesmoke;
   --primary-snake-color: rgb(83, 233, 83);
+  --primary-food-color: crimson;
   --unit-xxsm: 0.5px;
   --unit-xsm: 4px;
   --unit-sm: 8px;
@@ -50,4 +51,7 @@ body {
 }
 #container #gameboard .snake {
   background: var(--primary-snake-color);
+}
+#container #gameboard .food {
+  background: var(--primary-food-color);
 }/*# sourceMappingURL=style.css.map */

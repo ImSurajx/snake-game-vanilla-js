@@ -66,7 +66,24 @@ let snake = [
     { x: 6, y: 6 },
 ];
 
+// food (one at a time.)
+let food = [];
 
+// genrate food at random position in the game board
+function genrateFood() {
+    let randomFood = { x: Math.floor(Math.random() * rows), y: Math.floor(Math.random() * cols) };
+    food.push(randomFood);
+}
+
+// render food on grid
+function renderFood() {
+    grid[food[0].x][food[0].y].classList.add('food');
+}
+
+
+
+genrateFood();
+renderFood();
 // handling key press for direction change
 document.addEventListener("keydown", (e) => {
 
@@ -138,18 +155,30 @@ function moveSnake(direction) {
 
         return;
     }
+    // update snake on eating food..
+    if (newHead.x === food[0].x &&
+        newHead.y === food[0].y) {
+        snake.unshift({ x: food[0].x, y: food[0].y });
+        grid[food[0].x][food[0].y].classList.remove('food');
+        food.pop();
+        genrateFood();
+        renderFood();
+    }
+    else {
+        // getting tail (last element)
+        let tail = snake[snake.length - 1];
 
-    // getting tail (last element)
-    let tail = snake[snake.length - 1];
+        // adding new head at start
+        snake.unshift(newHead);
 
-    // adding new head at start
-    snake.unshift(newHead);
+        // removing tail from ui
+        grid[tail.x][tail.y].classList.remove('snake');
 
-    // removing tail from ui
-    grid[tail.x][tail.y].classList.remove('snake');
+        // removing last element from array
+        snake.pop();
+    }
 
-    // removing last element from array
-    snake.pop();
+
 }
 
 
@@ -161,10 +190,11 @@ function renderSnake() {
         grid[segment.x][segment.y].classList.add('snake');
     });
 }
-
-
 // initial render
 renderSnake();
+
+
+
 
 
 // game loop → runs every 400ms

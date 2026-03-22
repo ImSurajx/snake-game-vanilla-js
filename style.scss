@@ -18,6 +18,7 @@ body {
     --primary-background-color: #222;
     --primary-board-color: whitesmoke;
     --primary-snake-color: rgb(83, 233, 83);
+    --primary-food-color: crimson;
 
     // for padding, margin, other size
     --unit-xxsm: 0.5px;
@@ -53,6 +54,9 @@ body {
 
         .snake{
             background:var(--primary-snake-color);
+        }
+        .food{
+            background: var(--primary-food-color);
         }
     }
 }
