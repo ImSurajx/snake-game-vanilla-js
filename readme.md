@@ -7,14 +7,18 @@
   <img src="https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge" />
 </p>
 
----
+## 🎥 Gameplay Preview
+
+<p align="center">
+  <img src="./assets/img/game-play.gif" alt="Snake Game Gameplay" width="600"/>
+</p>
+
 
 ## 🎮 About the Game
 
 A classic Snake Game built using **HTML, CSS, and Vanilla JavaScript**.  
-Simple, fun, and perfect for understanding **game logic + DOM manipulation**.
+This project focuses on **game logic, DOM manipulation, and interactive UI design**.
 
----
 
 ## 🚀 Features
 
@@ -22,11 +26,21 @@ Simple, fun, and perfect for understanding **game logic + DOM manipulation**.
   <img src="https://img.shields.io/badge/Smooth-Movement-blue?style=flat-square" />
   <img src="https://img.shields.io/badge/Food-System-green?style=flat-square" />
   <img src="https://img.shields.io/badge/Score-Tracking-yellow?style=flat-square" />
+  <img src="https://img.shields.io/badge/HighScore-LocalStorage-purple?style=flat-square" />
   <img src="https://img.shields.io/badge/Game-Over-red?style=flat-square" />
-  <img src="https://img.shields.io/badge/Keyboard-Control-purple?style=flat-square" />
+  <img src="https://img.shields.io/badge/Pause-Resume-orange?style=flat-square" />
+  <img src="https://img.shields.io/badge/Restart-System-blueviolet?style=flat-square" />
+  <img src="https://img.shields.io/badge/Keyboard-Control-black?style=flat-square" />
 </p>
 
----
+
+## 🎯 Controls
+
+- ⬆️ ⬇️ ⬅️ ➡️ Arrow Keys → Move Snake  
+- ⏸️ Space → Pause / Resume  
+- 🔄 Restart Button → Restart Game  
+- 💻 Game is playable only on **Desktop / PC**
+
 
 ## 🛠️ Tech Stack
 
@@ -36,28 +50,27 @@ Simple, fun, and perfect for understanding **game logic + DOM manipulation**.
   <img src="https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript" />
 </p>
 
----
 
-## 🎯 How to Play
+## 🧩 Game Mechanics
 
-- ⬆️ ⬇️ ⬅️ ➡️ Use arrow keys to move  
-- 🍎 Eat food to grow  
-- ❌ Avoid walls & self collision  
-- 🏆 Score as high as possible  
+- 🐍 Snake moves in grid-based system  
+- 🍎 Food spawns at random positions  
+- 📈 Snake grows on eating food  
+- ❌ Game ends on:
+  - Wall collision  
+  - Self collision  
+- 🏆 High score stored using **localStorage**
 
----
 
-## 📁 Project Structure
+## 🎨 UI / UX Highlights
 
-```
-snake-game/
-│
-├── index.html
-├── style.scss
-└── script.js
-```
+- 🐍 Styled snake with head, eyes & animations  
+- 👅 Animated tongue effect  
+- 🎬 Smooth movement using CSS transitions  
+- 🪟 Overlay-based UI (Start + Game Over screens)  
+- 🤖 Leveraged AI-assisted suggestions to refine UI styling and animations  
 
----
+
 
 ## 🚀 Run Locally
 
@@ -67,30 +80,16 @@ cd snake-game
 open index.html
 ```
 
----
-
 ## 🧠 Learning Outcomes
-
 <p>
   <img src="https://img.shields.io/badge/DOM-Manipulation-blueviolet?style=flat-square" />
   <img src="https://img.shields.io/badge/Event-Handling-success?style=flat-square" />
   <img src="https://img.shields.io/badge/Game-Loop-important?style=flat-square" />
   <img src="https://img.shields.io/badge/Collision-Detection-red?style=flat-square" />
+  <img src="https://img.shields.io/badge/State-Management-yellow?style=flat-square" />
 </p>
 
----
-
-## 🔮 Future Improvements
-
-- 🔊 Sound effects  
-- 🎚️ Difficulty levels  
-- 📱 Mobile support  
-- 💾 High score saving  
-
----
-
 ## 👨‍💻 Author
-
 <p>
   <img src="https://img.shields.io/badge/Suraj-Kumar-blue?style=for-the-badge" />
 </p>
