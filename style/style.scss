@@ -1,0 +1,339 @@
+:root {
+    --primary-background-color: #222;
+    --primary-board-color: whitesmoke;
+    --primary-snake-color: rgb(83, 233, 83);
+    --primary-food-color: crimson;
+    --primary-text-color: #fff;
+
+    // for padding, margin, other size
+    --unit-xxsm: 0.5px;
+    --unit-xsm: 4px;
+    --unit-sm: 8px;
+    --unit-m: 16px;
+    --unit-l: 32px;
+    --unit-xl: 48px;
+    --unit-xxl: 96px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 300;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background: var(--primary-background-color);
+    color: var(--primary-text-color);
+}
+
+
+
+#container {
+    height: 100%;
+    width: 100%;
+    background: var(--primary-background-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    #gameboard {
+        height: 95%;
+        width: 95%;
+        background: url(../src/img/background.jpg);
+        background-position: center;
+        background-size: cover;
+        border-radius: var(--unit-xsm);
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(var(--unit-xl), 1fr));
+        grid-template-rows: repeat(auto-fill, minmax(var(--unit-xl), 1fr));
+
+        .block {
+            box-sizing: border-box;
+        }
+
+        /* =========================
+        🐍 SNAKE BODY
+        ========================= */
+        .snake {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border-radius: 12px;
+            margin: 2px;
+        }
+
+        /* =========================
+        🐍 SNAKE HEAD
+        ========================= */
+        .snake-head {
+            position: relative;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #81c784, #1b5e20);
+        }
+
+        /* =========================
+        👀 EYES (2 pseudo elements)
+        - before = left eye
+        - after = right eye
+        ========================= */
+        .snake-head::before,
+        .snake-head::after {
+            content: "";
+            position: absolute;
+
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            /* white eye with black pupil effect */
+            background: white;
+            box-shadow: inset -3px -3px 0 black;
+
+            animation: blink 2s infinite;
+        }
+
+        /* default (facing right) */
+        .snake-head::before {
+            top: 8px;
+            left: 8px;
+        }
+
+        .snake-head::after {
+            top: 8px;
+            right: 8px;
+        }
+
+        /* =========================
+        👀 BLINK ANIMATION
+        ========================= */
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            95% {
+                transform: scaleY(0.2);
+            }
+        }
+
+        /* =========================
+        🔄 DIRECTION-BASED EYES
+        ========================= */
+
+        /* RIGHT (default, optional) */
+        .snake-head.right::before {
+            top: 8px;
+            left: 8px;
+        }
+
+        .snake-head.right::after {
+            top: 8px;
+            right: 8px;
+        }
+
+        /* LEFT */
+        .snake-head.left::before {
+            top: 8px;
+            left: 8px;
+        }
+
+        .snake-head.left::after {
+            top: 8px;
+            right: 8px;
+        }
+
+        /* UP */
+        .snake-head.up::before {
+            top: 4px;
+            left: 10px;
+        }
+
+        .snake-head.up::after {
+            top: 4px;
+            right: 10px;
+        }
+
+        /* DOWN */
+        .snake-head.down::before {
+            bottom: 4px;
+            left: 10px;
+        }
+
+        .snake-head.down::after {
+            bottom: 4px;
+            right: 10px;
+        }
+
+        /* =========================
+        🍎 FOOD
+        ========================= */
+        .food {
+            background: radial-gradient(circle, red, darkred);
+            border-radius: 50%;
+        }
+
+        /* =========================
+        👅 TONGUE (REAL ELEMENT, not pseudo)
+        ⚠️ You must create <div class="tongue">
+        ========================= */
+        .tongue {
+            position: absolute;
+
+            width: 4px;
+            height: 12px;
+
+            background: red;
+
+            top: 50%;
+            left: 100%;
+
+            transform: translateY(-50%) scaleY(0);
+            transform-origin: top;
+
+            animation: tongueFlick 0.4s infinite;
+        }
+
+        /* =========================
+        👅 TONGUE ANIMATION
+        ========================= */
+        @keyframes tongueFlick {
+
+            0%,
+            100% {
+                transform: translateY(-50%) scaleY(0);
+            }
+
+            50% {
+                transform: translateY(-50%) scaleY(1);
+            }
+        }
+
+        /* =========================
+        🔄 TONGUE DIRECTION
+        ========================= */
+
+        .snake-head.left .tongue {
+            left: auto;
+            right: 100%;
+        }
+
+        .snake-head.up .tongue {
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%) rotate(-90deg) scaleY(0);
+        }
+
+        .snake-head.down .tongue {
+            left: 50%;
+            bottom: 0;
+            top: auto;
+            transform: translateX(-50%) rotate(90deg) scaleY(0);
+        }
+    }
+    
+}
+
+/* =========================
+   🎮 OVERLAY BASE
+========================= */
+.overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+
+    z-index: 10;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition: 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+/* show overlay */
+.overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* =========================
+   🎮 TITLE
+========================= */
+.game-title {
+    font-size: 3rem;
+    letter-spacing: 2px;
+}
+
+/* =========================
+   📦 CARD (rules box)
+========================= */
+.card {
+    background: #222;
+    padding: 20px 30px;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.card ul {
+    margin-top: 10px;
+}
+
+.card li {
+    margin-bottom: 8px;
+}
+
+/* =========================
+   🔘 BUTTONS
+========================= */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.primary {
+    background: #4caf50;
+    color: white;
+}
+
+.secondary {
+    background: crimson;
+    color: white;
+}
+
+/* =========================
+   💀 GAME OVER
+========================= */
+.game-over {
+    font-size: 2.5rem;
+    color: crimson;
+}
+
+/* =========================
+   📊 SCORE BOX
+========================= */
+.score-box {
+    text-align: center;
+}

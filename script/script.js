@@ -1,3 +1,17 @@
+const startScreen = document.getElementById("start-screen");
+const gameOverScreen = document.getElementById("gameover-screen");
+const restartBtn = document.getElementById("restart-btn");
+
+// start game
+document.getElementById("start-btn").addEventListener("click", () => {
+    startScreen.classList.remove("active");
+    startGame();
+});
+
+
+
+
+
 // selecting element
 let gameBoard = document.querySelector('#gameboard');
 
@@ -51,13 +65,6 @@ for (let i = 0; i < rows; i++) {
         // setting size of block
         div.style.height = `${blockHeight}px`;
         div.style.width = `${blockWidth}px`;
-
-        // optional dataset (not using currently)
-        // div.dataset.row = i;
-        // div.dataset.col = j;
-
-        // showing index for understanding grid
-        div.textContent = `(${i}, ${j})`;
 
         // storing block in grid
         grid[i][j] = div;
@@ -218,9 +225,35 @@ function moveSnake(direction) {
 // render snake
 function renderSnake() {
 
-    // loop through each segment and add class
-    snake.forEach(segment => {
-        grid[segment.x][segment.y].classList.add('snake');
+    // 1. remove all old snake classes
+    grid.forEach(row => {
+        row.forEach(cell => {
+            cell.classList.remove('snake', 'snake-head');
+        });
+    });
+
+    // 2. render fresh snake
+    snake.forEach((segment, index) => {
+        let cell = grid[segment.x][segment.y];
+
+        if (index === 0) {
+            cell.classList.add('snake-head');
+            const tongue = document.createElement("div");
+            tongue.classList.add("tongue");
+            grid[segment.x][segment.y].appendChild(tongue);
+
+            // remove old direction classes
+            cell.classList.remove('up', 'down', 'left', 'right');
+
+            // add current direction
+            if (direction === "ArrowUp") cell.classList.add('up');
+            if (direction === "ArrowDown") cell.classList.add('down');
+            if (direction === "ArrowLeft") cell.classList.add('left');
+            if (direction === "ArrowRight") cell.classList.add('right');
+
+        } else {
+            cell.classList.add('snake');
+        }
     });
 }
 // initial render
@@ -270,14 +303,22 @@ function restartGame() {
 }
 
 function handleOver() {
-    console.log("Game Over");
-    console.log(`your score is ${score}`);
+    gameOverScreen.classList.add("active");
     isGameOver = true;
     if (highScore < score) {
         highScore = score;
         localStorage.setItem("highscore", highScore);
     }
-    console.log(`high score is: ${highScore}`);
+    document.getElementById("final-score").textContent = score;
+    document.getElementById("high-score").textContent = highScore;
     clearInterval(GameLoop);
 }
 
+restartBtn.addEventListener("click", () => {
+    restartGame();     // reset everything
+    startGame();       // start loop again
+    isPaused = false;  // game running
+
+    // hide overlay
+    gameOverScreen.classList.remove("active");
+});

@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SnakeGame</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="shortcut icon" href="./src/img/snake.png" type="image/x-icon">
 </head>
 
 <body>
@@ -14,7 +15,42 @@
             <!-- <div class="block"></div> -->
         </div>
     </div>
-    <script src="./script.js"></script>
+    <div id="start-screen" class="overlay active">
+
+        <h1 class="game-title">🐍 Snake Game</h1>
+
+        <div class="card">
+            <h2>How to Play</h2>
+            <ul>
+                <li>Use <b>Arrow Keys</b> to move the snake</li>
+                <li>Press <b>Space</b> to Pause / Resume</li>
+                <li>Game is playable only on <b>Desktop / PC</b></li>
+                <li>Don’t hit walls ❌</li>
+                <li>Don’t hit yourself ❌</li>
+            </ul>
+        </div>
+
+        <button id="start-btn" class="btn primary">Start Game</button>
+
+    </div>
+
+    <div id="gameover-screen" class="overlay">
+
+        <h1 class="game-over">Game Over 💀</h1>
+
+        <div class="score-box">
+            <p>Your Score</p>
+            <h2 id="final-score">0</h2>
+        </div>
+
+        <div class="score-box">
+            <p>High Score</p>
+            <h2 id="high-score">0</h2>
+        </div>
+
+        <button id="restart-btn" class="btn secondary">Play Again</button>
+    </div>
+    <script src="./script/script.js"></script>
 </body>
 
 </html>
